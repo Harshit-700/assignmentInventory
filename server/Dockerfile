@@ -35,18 +35,8 @@ RUN composer dump-autoload --optimize
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
-# Create startup script
-RUN echo '#!/bin/bash\n\
-set -e\n\
-echo "Starting Laravel application..."\n\
-php artisan config:clear\n\
-php artisan cache:clear\n\
-php artisan migrate --force || echo "Migration failed or already done"\n\
-php artisan serve --host=0.0.0.0 --port=8080\n\
-' > /app/start.sh && chmod +x /app/start.sh
-
 # Expose port
 EXPOSE 8080
 
-# Start the application
-CMD ["/bin/bash", "/app/start.sh"]
+# Start command - simple and direct
+CMD php artisan config:cache && php artisan route:cache && php artisan migrate --force --seed; php artisan serve --host=0.0.0.0 --port=8080
