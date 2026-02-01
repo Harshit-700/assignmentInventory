@@ -38,5 +38,5 @@ RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions sto
 # Expose port
 EXPOSE 8080
 
-# Start command - simple and direct
-CMD php artisan config:cache && php artisan route:cache && php artisan migrate --force --seed; php artisan serve --host=0.0.0.0 --port=8080
+# Start command - don't cache config (env vars are set at runtime)
+CMD php artisan migrate --force && echo "Starting server on port 8080..." && php artisan serve --host=0.0.0.0 --port=8080
