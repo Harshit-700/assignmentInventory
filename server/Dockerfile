@@ -45,10 +45,8 @@ php artisan migrate --force || echo "Migration failed or already done"\n\
 php artisan serve --host=0.0.0.0 --port=${PORT:-8000}\n\
 ' > /app/start.sh && chmod +x /app/start.sh
 
-# Expose port
-EXPOSE 8000
+# Expose port (Railway will use PORT env var)
+EXPOSE ${PORT:-8000}
 
+# Start the application
 CMD ["/bin/bash", "/app/start.sh"]
-
-# Start command
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
