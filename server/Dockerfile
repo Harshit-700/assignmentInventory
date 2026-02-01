@@ -42,11 +42,11 @@ echo "Starting Laravel application..."\n\
 php artisan config:clear\n\
 php artisan cache:clear\n\
 php artisan migrate --force || echo "Migration failed or already done"\n\
-php artisan serve --host=0.0.0.0 --port=${PORT:-8000}\n\
+php artisan serve --host=0.0.0.0 --port=8080\n\
 ' > /app/start.sh && chmod +x /app/start.sh
 
-# Expose port (Railway will use PORT env var)
-EXPOSE ${PORT:-8000}
+# Expose port
+EXPOSE 8080
 
 # Start the application
 CMD ["/bin/bash", "/app/start.sh"]
